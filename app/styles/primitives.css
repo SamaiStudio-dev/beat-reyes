@@ -1,0 +1,12 @@
+@theme static {
+  --color-coffee-bean: #0f0608;
+  --color-silver: #a5a5a5;
+  --color-white-smoke: #f2f2f2;
+  --color-neon-grass: #5aff15;
+  --color-bright-fern: #29bf12;
+
+  --font-sans: "Ubuntu", ui-sans-serif, system-ui, sans-serif,
+    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+
+  --radius: 8px;
+}
