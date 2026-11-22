@@ -6,4 +6,4 @@
  *             app/components/atoms/<Nombre>/index.ts
  */
 
-export {};
+export { Button, buttonColors, type ButtonColor, type ButtonSize, type ButtonTextColor } from "./button";

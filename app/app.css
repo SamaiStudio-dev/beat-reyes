@@ -6,3 +6,63 @@ body {
   @apply bg-coffee-bean font-sans text-white-smoke;
   color-scheme: dark;
 }
+
+@property --button-angle {
+  syntax: "<angle>";
+  inherits: true;
+  initial-value: 0deg;
+}
+
+@keyframes button-border-spin {
+  to {
+    --button-angle: 360deg;
+  }
+}
+
+.button-animated-border {
+  position: relative;
+  isolation: isolate;
+  box-shadow: inset 0 0 0 1px rgb(255 255 255 / 35%);
+  animation: button-border-spin 2.8s linear infinite;
+}
+
+.button-animated-border::before,
+.button-animated-border::after {
+  content: "";
+  position: absolute;
+  border-radius: inherit;
+  padding: 1.5px;
+  background: conic-gradient(
+    from var(--button-angle),
+    transparent 0deg,
+    transparent 230deg,
+    #ffffff 275deg,
+    #5aff15 315deg,
+    transparent 350deg
+  );
+  pointer-events: none;
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+}
+
+.button-animated-border::before {
+  inset: 0;
+}
+
+.button-animated-border::after {
+  inset: -3px;
+  filter: blur(7px);
+  opacity: 0.9;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .button-animated-border {
+    animation: none;
+  }
+}
