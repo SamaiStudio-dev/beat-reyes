@@ -1,13 +1,26 @@
-import { useRef, useState } from "react";
+import { useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
+import { Button } from "~/components/atoms";
 import { FRAME_COUNT, frameSrc } from "~/frames";
 import { palette } from "~/styles/primitives";
 
 gsap.registerPlugin(ScrollTrigger, useGSAP);
 
 const PIXELS_PER_FRAME = 18;
+
+type HeroAction = {
+  label: string;
+  to: string;
+};
+
+type HeroSectionProps = {
+  title: string;
+  description: string;
+  action: HeroAction;
+  imageLabel: string;
+};
 
 function loadImage(index: number) {
   return new Promise<HTMLImageElement>((resolve, reject) => {
@@ -36,13 +49,9 @@ function paint(
   ctx.drawImage(image, x, y, drawWidth, drawHeight);
 }
 
-export function HeroSection() {
+export function HeroSection({ title, description, action, imageLabel }: HeroSectionProps) {
   const sectionRef = useRef<HTMLElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const counterRef = useRef<HTMLSpanElement>(null);
-  const [loadedCount, setLoadedCount] = useState(0);
-  const [firstReady, setFirstReady] = useState(false);
-  const [reducedMotion, setReducedMotion] = useState(false);
 
   useGSAP(() => {
     const canvas = canvasRef.current;
@@ -78,9 +87,6 @@ export function HeroSection() {
 
       paint(ctx, image, width, height);
       lastPainted = index;
-      if (counterRef.current) {
-        counterRef.current.textContent = `${String(index + 1).padStart(3, "0")} / ${FRAME_COUNT}`;
-      }
     };
 
     const onResize = () => {
@@ -99,14 +105,10 @@ export function HeroSection() {
           try {
             images[index] = await loadImage(index);
             if (cancelled) return;
-            if (index === 0) {
-              setFirstReady(true);
-              draw(0);
-            }
-            setLoadedCount((current) => current + 1);
+            if (index === 0) draw(0);
             if (Math.round(playhead.frame) === index) draw(index);
           } catch {
-            if (!cancelled) setLoadedCount((current) => current + 1);
+            // Un frame que falla no detiene el resto de la secuencia.
           }
         }
       });
@@ -116,12 +118,10 @@ export function HeroSection() {
     const mm = gsap.matchMedia();
 
     mm.add("(prefers-reduced-motion: reduce)", () => {
-      setReducedMotion(true);
       void preload(1);
     });
 
     mm.add("(prefers-reduced-motion: no-preference)", () => {
-      setReducedMotion(false);
       gsap.to(playhead, {
         frame: FRAME_COUNT - 1,
         snap: "frame",
@@ -145,28 +145,20 @@ export function HeroSection() {
     };
   }, { scope: sectionRef });
 
-  const loadProgress = Math.round((loadedCount / FRAME_COUNT) * 100);
-
   return (
     <section ref={sectionRef} className="relative h-screen bg-coffee-bean">
       <canvas
         ref={canvasRef}
         className="absolute inset-0 h-full w-full"
-        aria-label="Secuencia de la cafetera controlada con el scroll"
+        aria-label={imageLabel}
       />
-      <div className="pointer-events-none absolute inset-x-0 bottom-0 flex items-end justify-between gap-6 p-6 sm:p-8">
-        <p className="max-w-xs text-sm text-white-smoke/80">
-          {reducedMotion
-            ? "Tu sistema pide menos movimiento, así que la secuencia queda en el primer frame."
-            : firstReady
-              ? "Deslizá para reproducir la secuencia."
-              : "Preparando el primer frame…"}
-        </p>
-        <div className="text-right text-xs tracking-wide text-silver">
-          <span ref={counterRef}>001 / {FRAME_COUNT}</span>
-          {loadedCount < FRAME_COUNT && !reducedMotion ? (
-            <span className="mt-1 block">Cargando {loadProgress}%</span>
-          ) : null}
+      <div className="pointer-events-none absolute inset-0 z-10 flex items-center px-5 sm:px-8">
+        <div className="max-w-xl">
+          <h1 className="text-4xl font-bold text-white-smoke sm:text-6xl">{title}</h1>
+          <p className="mt-4 max-w-md text-base text-white-smoke sm:text-lg">{description}</p>
+          <div className="pointer-events-auto mt-8">
+            <Button to={action.to} variant="animated" size="lg">{action.label}</Button>
+          </div>
         </div>
       </div>
     </section>
