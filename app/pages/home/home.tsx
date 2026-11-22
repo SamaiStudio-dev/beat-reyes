@@ -1,6 +1,6 @@
 import type { Route } from "./+types/home";
 import { content } from "~/constants/content";
-import { HeroSection } from "~/components/organisms";
+import { AboutSection, HeroSection } from "~/components/organisms";
 
 export function meta({}: Route.MetaArgs) {
   return [
@@ -21,11 +21,13 @@ export default function Home() {
         action={{ label: content.home.heroActionLabel, to: content.home.heroActionPath }}
         imageLabel={content.home.heroImageLabel}
       />
-      <section className="flex min-h-[40vh] items-center justify-center px-6 py-24">
-        <p className="max-w-md text-center text-lg text-silver">
-          {content.home.ending}
-        </p>
-      </section>
+      <AboutSection
+        imageSrc={content.about.imageSrc}
+        imageAlt={content.about.imageAlt}
+        title={content.about.title}
+        description={content.about.description}
+        stats={[...content.about.stats]}
+      />
     </main>
   );
 }

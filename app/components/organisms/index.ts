@@ -6,5 +6,6 @@
  *             app/components/organisms/<Nombre>/index.ts
  */
 
+export { AboutSection, type AboutStat } from "./about-section";
 export { HeroSection } from "./hero-section";
 export { Navbar, type NavbarLink } from "./navbar";

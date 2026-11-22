@@ -21,7 +21,18 @@ export const content = {
     heroActionLabel: "Tomemos un café",
     heroActionPath: "/contacto",
     heroImageLabel: "Secuencia de la cafetera controlada con el scroll",
-    ending: "Fin de la secuencia. Volvé hacia arriba para verla de nuevo.",
+  },
+  about: {
+    imageSrc: "/about.png",
+    imageAlt: "David Reyes",
+    title: "TÉCNICA REAL, BUENA ONDA.",
+    description:
+      "Soy David Reyes. Nací en Colombia, pero fue acá en Buenos Aires donde me hice barista de verdad. Llevo más de seis años trabajando en cafeterías de especialidad, jugando con todo: desde calibrar una máquina espresso profesional hasta sacar lo mejor de una AeroPress o una italiana. Hoy vuelco toda esa experiencia en clases, catas y asesorías para que disfrutes el café sin vueltas.",
+    stats: [
+      { value: "+6 AÑOS", label: "DE EXPERIENCIA REAL" },
+      { value: "+120", label: "BARISTAS FORMADOS" },
+      { value: "1 A 1", label: "CLASES, CATAS Y ASESORÍA" },
+    ],
   },
   errors: {
     title: "Oops!",
