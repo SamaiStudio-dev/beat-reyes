@@ -9,15 +9,14 @@ import {
 
 import type { Route } from "./+types/root";
 import { Navbar, type NavbarLink } from "./components/organisms/navbar";
+import "./app.css";
 
 const navbarLinks: NavbarLink[] = [
   { label: "Sobre mí", to: "/sobre-mi" },
   { label: "Cursos", to: "/cursos" },
-  { label: "Contacto", to: "/contacto" },
   { label: "Asesoría", to: "/asesoria" },
-  { label: "Herramientas", to: "/herramientas" },
+  { label: "Contacto", to: "/contacto" },
 ];
-import "./app.css";
 
 export const links: Route.LinksFunction = () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -53,7 +52,14 @@ export function Layout({ children }: { children: React.ReactNode }) {
 export default function App() {
   return (
     <>
-      <Navbar brand="David Reyes" homeTo="/" links={navbarLinks} />
+      <Navbar
+        brand="David Reyes"
+        homeTo="/"
+        links={navbarLinks}
+        label="Principal"
+        openMenuLabel="Abrir menú"
+        closeMenuLabel="Cerrar menú"
+      />
       <Outlet />
     </>
   );

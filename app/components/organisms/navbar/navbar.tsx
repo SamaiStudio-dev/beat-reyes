@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router";
+import { Button } from "~/components/atoms";
 
 export type NavbarLink = {
   label: string;
@@ -10,9 +11,19 @@ type NavbarProps = {
   brand: string;
   homeTo: string;
   links: NavbarLink[];
+  label: string;
+  openMenuLabel: string;
+  closeMenuLabel: string;
 };
 
-export function Navbar({ brand, homeTo, links }: NavbarProps) {
+export function Navbar({
+  brand,
+  homeTo,
+  links,
+  label,
+  openMenuLabel,
+  closeMenuLabel,
+}: NavbarProps) {
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
@@ -44,7 +55,7 @@ export function Navbar({ brand, homeTo, links }: NavbarProps) {
     <header className="fixed inset-x-0 top-0 z-50">
       <nav
         className="relative z-50 flex items-center justify-between bg-coffee-bean/45 px-5 py-4 backdrop-blur-md sm:px-8"
-        aria-label="Principal"
+        aria-label={label}
       >
         <Link
           to={homeTo}
@@ -57,12 +68,9 @@ export function Navbar({ brand, homeTo, links }: NavbarProps) {
         <ul className="hidden items-center gap-8 lg:flex">
           {links.map((link) => (
             <li key={link.to}>
-              <Link
-                to={link.to}
-                className="text-base text-white-smoke transition-colors hover:text-neon-grass"
-              >
+              <Button variant="link" to={link.to} size="md">
                 {link.label}
-              </Link>
+              </Button>
             </li>
           ))}
         </ul>
@@ -74,7 +82,7 @@ export function Navbar({ brand, homeTo, links }: NavbarProps) {
           aria-controls="site-menu"
           onClick={() => setOpen((value) => !value)}
         >
-          <span className="sr-only">{open ? "Cerrar menú" : "Abrir menú"}</span>
+          <span className="sr-only">{open ? closeMenuLabel : openMenuLabel}</span>
           <MenuIcon open={open} />
         </button>
       </nav>
@@ -86,13 +94,9 @@ export function Navbar({ brand, homeTo, links }: NavbarProps) {
         <ul className="flex flex-col gap-8">
           {links.map((link) => (
             <li key={link.to}>
-              <Link
-                to={link.to}
-                className="text-4xl font-bold text-white-smoke transition-colors hover:text-neon-grass"
-                onClick={close}
-              >
+              <Button variant="link" to={link.to} size="lg" onClick={close}>
                 {link.label}
-              </Link>
+              </Button>
             </li>
           ))}
         </ul>
