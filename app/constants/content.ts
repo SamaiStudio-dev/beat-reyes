@@ -1,3 +1,5 @@
+const aboutSectionId = "sobre-mi";
+
 export const content = {
   brand: "David Reyes",
   homePath: "/",
@@ -6,7 +8,7 @@ export const content = {
     openMenu: "Abrir menú",
     closeMenu: "Cerrar menú",
     links: [
-      { label: "Sobre mí", to: "/sobre-mi" },
+      { label: "Sobre mí", to: `/#${aboutSectionId}` },
       { label: "Cursos", to: "/cursos" },
       { label: "Asesoría", to: "/asesoria" },
       { label: "Contacto", to: "/contacto" },
@@ -23,6 +25,7 @@ export const content = {
     heroImageLabel: "Secuencia de la cafetera controlada con el scroll",
   },
   about: {
+    id: aboutSectionId,
     imageSrc: "/about.png",
     imageAlt: "David Reyes",
     title: "TÉCNICA REAL, BUENA ONDA.",

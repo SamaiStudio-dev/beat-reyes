@@ -7,6 +7,7 @@ export type AboutStat = {
 };
 
 type AboutSectionProps = {
+  id: string;
   imageSrc: string;
   imageAlt: string;
   title: string;
@@ -40,6 +41,7 @@ function AboutImage({ src, alt }: { src: string; alt: string }) {
 }
 
 export function AboutSection({
+  id,
   imageSrc,
   imageAlt,
   title,
@@ -48,7 +50,10 @@ export function AboutSection({
   cardColor = "neon-grass",
 }: AboutSectionProps) {
   return (
-    <section className="flex h-screen items-center overflow-hidden bg-coffee-bean px-5 sm:px-8">
+    <section
+      id={id}
+      className="flex h-screen items-center overflow-hidden bg-coffee-bean px-5 sm:px-8"
+    >
       <div className="mx-auto grid h-full w-full max-w-6xl items-center gap-8 py-16 lg:grid-cols-2">
         <AboutImage src={imageSrc} alt={imageAlt} />
         <div>
