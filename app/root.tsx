@@ -8,15 +8,9 @@ import {
 } from "react-router";
 
 import type { Route } from "./+types/root";
-import { Navbar, type NavbarLink } from "./components/organisms/navbar";
+import { Navbar } from "./components/organisms/navbar";
+import { content } from "./constants/content";
 import "./app.css";
-
-const navbarLinks: NavbarLink[] = [
-  { label: "Sobre mí", to: "/sobre-mi" },
-  { label: "Cursos", to: "/cursos" },
-  { label: "Asesoría", to: "/asesoria" },
-  { label: "Contacto", to: "/contacto" },
-];
 
 export const links: Route.LinksFunction = () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -53,12 +47,12 @@ export default function App() {
   return (
     <>
       <Navbar
-        brand="David Reyes"
-        homeTo="/"
-        links={navbarLinks}
-        label="Principal"
-        openMenuLabel="Abrir menú"
-        closeMenuLabel="Cerrar menú"
+        brand={content.brand}
+        homeTo={content.homePath}
+        links={[...content.navigation.links]}
+        label={content.navigation.label}
+        openMenuLabel={content.navigation.openMenu}
+        closeMenuLabel={content.navigation.closeMenu}
       />
       <Outlet />
     </>
@@ -66,15 +60,15 @@ export default function App() {
 }
 
 export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
-  let message = "Oops!";
-  let details = "An unexpected error occurred.";
+  let message: string = content.errors.title;
+  let details: string = content.errors.unexpected;
   let stack: string | undefined;
 
   if (isRouteErrorResponse(error)) {
-    message = error.status === 404 ? "404" : "Error";
+    message = error.status === 404 ? content.errors.notFoundTitle : content.errors.fallback;
     details =
       error.status === 404
-        ? "The requested page could not be found."
+        ? content.errors.notFound
         : error.statusText || details;
   } else if (import.meta.env.DEV && error && error instanceof Error) {
     details = error.message;

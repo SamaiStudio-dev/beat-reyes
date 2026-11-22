@@ -1,10 +1,11 @@
+import { content } from "~/constants/content";
 import { readFrame } from "../lib/frames.server";
 import type { Route } from "./+types/frames";
 
 export async function loader({ params }: Route.LoaderArgs) {
   const data = await readFrame(params.name ?? "");
   if (!data) {
-    throw new Response("Frame no encontrado", { status: 404 });
+    throw new Response(content.errors.frameNotFound, { status: 404 });
   }
 
   const body = new ArrayBuffer(data.byteLength);

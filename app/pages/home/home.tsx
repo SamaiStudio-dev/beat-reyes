@@ -1,12 +1,13 @@
 import type { Route } from "./+types/home";
+import { content } from "~/constants/content";
 import { HeroSection } from "~/components/organisms";
 
 export function meta({}: Route.MetaArgs) {
   return [
-    { title: "Cafetera" },
+    { title: content.home.metaTitle },
     {
       name: "description",
-      content: "Secuencia de frames de una cafetera reproducida con el scroll.",
+      content: content.home.metaDescription,
     },
   ];
 }
@@ -15,14 +16,14 @@ export default function Home() {
   return (
     <main>
       <HeroSection
-        title="¡Bienvenido! ¿Preparamos algo?"
-        description="Me dedico a compartir lo que sé de café a través de cursos prácticos y asesorías. Dime qué necesitas y arrancamos."
-        action={{ label: "Tomemos un café", to: "/contacto" }}
-        imageLabel="Secuencia de la cafetera controlada con el scroll"
+        title={content.home.heroTitle}
+        description={content.home.heroDescription}
+        action={{ label: content.home.heroActionLabel, to: content.home.heroActionPath }}
+        imageLabel={content.home.heroImageLabel}
       />
       <section className="flex min-h-[40vh] items-center justify-center px-6 py-24">
         <p className="max-w-md text-center text-lg text-silver">
-          Fin de la secuencia. Volvé hacia arriba para verla de nuevo.
+          {content.home.ending}
         </p>
       </section>
     </main>
