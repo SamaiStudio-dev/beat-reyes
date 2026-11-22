@@ -6,4 +6,4 @@
  *             app/components/organisms/<Nombre>/index.ts
  */
 
-export {};
+export { Navbar, type NavbarLink } from "./navbar";

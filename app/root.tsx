@@ -8,6 +8,15 @@ import {
 } from "react-router";
 
 import type { Route } from "./+types/root";
+import { Navbar, type NavbarLink } from "./components/organisms/navbar";
+
+const navbarLinks: NavbarLink[] = [
+  { label: "Sobre mí", to: "/sobre-mi" },
+  { label: "Cursos", to: "/cursos" },
+  { label: "Contacto", to: "/contacto" },
+  { label: "Asesoría", to: "/asesoria" },
+  { label: "Herramientas", to: "/herramientas" },
+];
 import "./app.css";
 
 export const links: Route.LinksFunction = () => [
@@ -19,7 +28,7 @@ export const links: Route.LinksFunction = () => [
   },
   {
     rel: "stylesheet",
-    href: "https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap",
+    href: "https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap",
   },
 ];
 
@@ -42,7 +51,12 @@ export function Layout({ children }: { children: React.ReactNode }) {
 }
 
 export default function App() {
-  return <Outlet />;
+  return (
+    <>
+      <Navbar brand="David Reyes" homeTo="/" links={navbarLinks} />
+      <Outlet />
+    </>
+  );
 }
 
 export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
@@ -62,7 +76,7 @@ export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
   }
 
   return (
-    <main className="pt-16 p-4 container mx-auto text-neutral-100">
+    <main className="pt-16 p-4 container mx-auto text-white-smoke">
       <h1>{message}</h1>
       <p>{details}</p>
       {stack && (
