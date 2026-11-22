@@ -1,0 +1,41 @@
+# Dependencias
+node_modules/
+
+# React Router (tipos generados y salida de `react-router build`)
+.react-router/
+build/
+
+# Vite
+.vite/
+dist/
+*.local
+
+# TypeScript
+*.tsbuildinfo
+
+# Variables de entorno
+.env
+.env.*
+!.env.example
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Tests y cobertura
+coverage/
+
+# Sistema y editores
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Cursor (ajustes locales)
+.cursor/
