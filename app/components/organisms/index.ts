@@ -7,5 +7,6 @@
  */
 
 export { AboutSection, type AboutStat } from "./about-section";
+export { CoursesSection } from "./courses-section";
 export { HeroSection } from "./hero-section";
 export { Navbar, type NavbarLink } from "./navbar";

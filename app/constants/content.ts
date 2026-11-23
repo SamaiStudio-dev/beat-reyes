@@ -36,6 +36,11 @@ export const content = {
       { value: "+120", label: "BARISTAS FORMADOS" }
     ],
   },
+  courses: {
+    metaTitle: "Cursos",
+    metaDescription: "Cursos de café con David Reyes.",
+    title: "Cursos",
+  },
   errors: {
     title: "Oops!",
     fallback: "Error",
