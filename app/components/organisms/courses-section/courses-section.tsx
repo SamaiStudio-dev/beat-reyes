@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Chip, type ChipVariant } from "~/components/atoms";
-import { InfoCard, type InfoCardBackground, type InfoCardVariant } from "~/components/molecules";
+import { HorizontalCard, InfoCard, type InfoCardBackground, type InfoCardVariant } from "~/components/molecules";
 
 export type CourseBadge = {
   label: string;
@@ -79,21 +79,34 @@ export function CoursesSection({
             );
           })}
         </ul>
-        <ul className="mt-10 grid gap-8 lg:grid-cols-3">
+        <ul className="mt-10 grid gap-4 lg:grid-cols-3 lg:gap-8">
           {visibleCourses.map((course) => (
             <li key={course.id}>
-              <InfoCard
-                variant={course.variant}
-                backgroundColor={cardBackgroundColor}
-                imageSrc={course.imageSrc}
-                imageAlt={course.imageAlt}
-                meta={course.meta}
-                price={course.price}
-                title={course.title}
-                description={course.description}
-                actionLabel={course.actionLabel}
-                actionTo={course.actionTo}
-              />
+              <div className="lg:hidden">
+                <HorizontalCard
+                  backgroundColor={cardBackgroundColor}
+                  imageSrc={course.imageSrc}
+                  imageAlt={course.imageAlt}
+                  title={course.title}
+                  description={course.description}
+                  actionLabel={course.actionLabel}
+                  actionTo={course.actionTo}
+                />
+              </div>
+              <div className="hidden h-full lg:block">
+                <InfoCard
+                  variant={course.variant}
+                  backgroundColor={cardBackgroundColor}
+                  imageSrc={course.imageSrc}
+                  imageAlt={course.imageAlt}
+                  meta={course.meta}
+                  price={course.price}
+                  title={course.title}
+                  description={course.description}
+                  actionLabel={course.actionLabel}
+                  actionTo={course.actionTo}
+                />
+              </div>
             </li>
           ))}
         </ul>

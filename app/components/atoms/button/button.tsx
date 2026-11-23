@@ -129,6 +129,14 @@ export function Button(props: ButtonProps) {
       children
     );
 
+  if (to && /^https?:\/\//.test(to)) {
+    return (
+      <a href={to} target="_blank" rel="noopener noreferrer" onClick={onClick} className={className}>
+        {label}
+      </a>
+    );
+  }
+
   if (to) {
     return (
       <Link to={to} onClick={onClick} className={className}>

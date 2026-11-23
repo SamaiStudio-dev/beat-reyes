@@ -8,6 +8,8 @@ import footerEdge from "~/assets/bottom.png";
 import heroGraffiti from "~/assets/grafiti-hero.svg";
 import advisoryImage from "~/assets/cafeteria.jpeg";
 
+const whatsappHref = "https://wa.me/5491127034860";
+const instagramHref = "https://www.instagram.com/beatreyes_/";
 const aboutSectionId = "sobre-mi";
 const coursesSectionId = "cursos";
 const advisorySectionId = "asesoria";
@@ -33,7 +35,7 @@ export const content = {
     heroTitle: "¡Bienvenido! ¿Preparamos algo?",
     heroDescription: "Me dedico a compartir lo que sé de café a través de cursos prácticos y asesorías. Dime qué necesitas y arrancamos.",
     heroActionLabel: "Hablemos",
-    heroActionPath: "/contacto",
+    heroActionPath: whatsappHref,
     heroImageLabel: "Secuencia de la cafetera controlada con el scroll",
     heroDecorationSrc: heroGraffiti,
     heroDecorationAlt: "",
@@ -66,6 +68,19 @@ export const content = {
       { id: "intensivo", label: "Intensivo" },
     ],
     items: [
+      {
+        id: "barista-inicial",
+        category: "presencial",
+        variant: "image",
+        imageSrc: advisoryImage,
+        imageAlt: "Máquina de espresso en una cafetería",
+        meta: "Presencial",
+        title: "Barista inicial",
+        description:
+          "Primeros pasos en barra: molienda, espresso, leche y servicio para arrancar con criterio.",
+        actionLabel: "Ver más",
+        actionTo: "/cursos/barista-inicial",
+      },
       {
         id: "espresso",
         category: "presencial",
@@ -154,8 +169,8 @@ export const content = {
   social: {
     label: "Redes sociales",
     links: [
-      { icon: "whatsapp", label: "WhatsApp", href: "https://wa.me/" },
-      { icon: "instagram", label: "Instagram", href: "https://www.instagram.com/" },
+      { icon: "whatsapp", label: "WhatsApp", href: whatsappHref },
+      { icon: "instagram", label: "Instagram", href: instagramHref },
     ],
   },
   footer: {

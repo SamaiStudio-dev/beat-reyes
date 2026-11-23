@@ -160,15 +160,19 @@ export function HeroSection({
 
   return (
     <section ref={sectionRef} className="relative flex h-screen items-center bg-black px-5 sm:px-8">
-      <div className="mx-auto grid w-full max-w-6xl items-center gap-8 lg:grid-cols-2">
-        <div>
-          <h1 className="origin-left -rotate-[0.5deg] text-4xl font-bold text-white-smoke sm:text-6xl">{title}</h1>
-          <p className="mt-8 max-w-md text-base text-white-smoke sm:text-lg">{description}</p>
-          <div className="mt-8">
+      <div className="mx-auto grid w-full max-w-6xl items-center gap-6 lg:grid-cols-2 lg:gap-8">
+        <div className="contents lg:block">
+          <h1 className="order-1 origin-left -rotate-[0.5deg] text-4xl font-bold text-white-smoke sm:text-6xl">
+            {title}
+          </h1>
+          <p className="order-2 max-w-md text-base text-white-smoke sm:text-lg lg:mt-8">
+            {description}
+          </p>
+          <div className="order-4 mt-12 justify-self-center lg:mt-8 lg:justify-self-start">
             <Button to={action.to} variant="animated" size="lg">{action.label}</Button>
           </div>
         </div>
-        <div className="relative">
+        <div className="relative order-3 lg:order-none">
           <div className="overflow-hidden rounded border border-white-smoke/15">
             <canvas
               ref={canvasRef}
@@ -184,20 +188,20 @@ export function HeroSection({
             />
           ) : null}
         </div>
+        {scrollHint ? (
+          <button
+            type="button"
+            onClick={() => {
+              if (!scrollHintTargetId) return;
+              document.getElementById(scrollHintTargetId)?.scrollIntoView({ behavior: "smooth" });
+            }}
+            className="absolute inset-x-0 bottom-6 z-20 flex cursor-pointer flex-col items-center gap-2 text-sm text-white-smoke focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white-smoke"
+          >
+            {scrollHint}
+            <Icon name="arrow-down" className="size-5" />
+          </button>
+        ) : null}
       </div>
-      {scrollHint ? (
-        <button
-          type="button"
-          onClick={() => {
-            if (!scrollHintTargetId) return;
-            document.getElementById(scrollHintTargetId)?.scrollIntoView({ behavior: "smooth" });
-          }}
-          className="absolute inset-x-0 bottom-6 z-20 flex cursor-pointer flex-col items-center gap-2 text-sm text-white-smoke focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white-smoke"
-        >
-          {scrollHint}
-          <Icon name="arrow-down" className="size-5" />
-        </button>
-      ) : null}
     </section>
   );
 }
