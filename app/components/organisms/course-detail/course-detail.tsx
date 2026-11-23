@@ -31,6 +31,35 @@ function CourseImage({ src, alt }: { src: string; alt: string }) {
   );
 }
 
+function CourseDescription({ text }: { text: string }) {
+  const blocks = text.split(/\n\n+/);
+
+  return (
+    <div className="mt-4 space-y-6 text-base leading-7 text-silver">
+      {blocks.map((block) => {
+        const lines = block.split("\n").map((line) => line.trim()).filter(Boolean);
+        const isList = lines.length > 0 && lines.every((line) => /^\d+\.\s/.test(line));
+
+        if (isList) {
+          return (
+            <ol key={lines[0]} className="list-decimal space-y-4 pl-5">
+              {lines.map((line) => (
+                <li key={line}>{line.replace(/^\d+\.\s/, "")}</li>
+              ))}
+            </ol>
+          );
+        }
+
+        return (
+          <p key={lines[0] ?? block} className="whitespace-pre-line">
+            {block.trim()}
+          </p>
+        );
+      })}
+    </div>
+  );
+}
+
 export function CourseDetail({
   title,
   description,
@@ -45,7 +74,7 @@ export function CourseDetail({
         <p className="text-xs tracking-wide text-neon-grass uppercase">{meta}</p>
         <h1 className="mt-3 text-4xl font-bold text-white-smoke">{title}</h1>
         {price ? <p className="mt-3 text-white-smoke">{price}</p> : null}
-        <p className="mt-4 text-base text-silver">{description}</p>
+        <CourseDescription text={description} />
         {imageSrc ? <CourseImage src={imageSrc} alt={imageAlt} /> : null}
       </div>
     </section>

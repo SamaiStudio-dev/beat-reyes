@@ -79,7 +79,7 @@ export function HorizontalCard({
       {imageSrc ? <CardImage src={imageSrc} alt={imageAlt} /> : null}
       <div className="flex min-w-0 flex-1 flex-col p-4">
         <h2 className={`text-lg font-bold ${heading}`}>{title}</h2>
-        <p className={`mt-1 flex-1 text-sm ${body}`}>{description}</p>
+        <p className={`mt-1 line-clamp-4 flex-1 text-sm whitespace-pre-line ${body}`}>{description}</p>
         <div className="mt-3">
           <Button variant="link" color={light ? "coffee-bean" : "neon-grass"} size="sm" to={actionTo}>
             {actionLabel}

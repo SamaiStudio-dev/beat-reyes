@@ -14,12 +14,20 @@ export function meta({}: Route.MetaArgs) {
   ];
 }
 
+function scrollToHash() {
+  const id = window.location.hash.slice(1);
+  if (!id) return;
+  document.getElementById(id)?.scrollIntoView({ behavior: "auto" });
+}
+
 export default function Home() {
   const { hash } = useLocation();
 
   useEffect(() => {
     if (!hash) return;
-    document.getElementById(hash.slice(1))?.scrollIntoView({ behavior: "smooth" });
+    scrollToHash();
+    const timeout = window.setTimeout(scrollToHash, 250);
+    return () => window.clearTimeout(timeout);
   }, [hash]);
 
   return (
@@ -34,6 +42,7 @@ export default function Home() {
           decorationAlt={content.home.heroDecorationAlt}
           scrollHint={content.home.heroScrollHint}
           scrollHintTargetId={content.about.id}
+          onReady={scrollToHash}
         />
         <AboutSection
           id={content.about.id}

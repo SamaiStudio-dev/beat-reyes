@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router";
 import { Chip, type ChipVariant } from "~/components/atoms";
 import { HorizontalCard, InfoCard, type InfoCardBackground, type InfoCardVariant } from "~/components/molecules";
 
@@ -45,6 +46,7 @@ export function CoursesSection({
   courses,
   cardBackgroundColor,
 }: CoursesSectionProps) {
+  const navigate = useNavigate();
   const [activeFilter, setActiveFilter] = useState(filters[0]?.id ?? "all");
   const visibleCourses =
     activeFilter === "all" ? courses : courses.filter((course) => course.category === activeFilter);
@@ -79,7 +81,18 @@ export function CoursesSection({
             );
           })}
         </ul>
-        <ul className="mt-10 grid gap-4 lg:grid-cols-3 lg:gap-8">
+        <ul
+          className="mt-10 grid gap-4 lg:grid-cols-3 lg:gap-8"
+          onClickCapture={(event) => {
+            const anchor = (event.target as HTMLElement).closest("a");
+            const href = anchor?.getAttribute("href");
+            if (!anchor || !href?.startsWith("/cursos/")) return;
+            event.preventDefault();
+            event.stopPropagation();
+            navigate({ hash: id }, { replace: true });
+            window.setTimeout(() => navigate(href), 0);
+          }}
+        >
           {visibleCourses.map((course) => (
             <li key={course.id}>
               <div className="lg:hidden">

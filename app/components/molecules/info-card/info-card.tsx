@@ -95,7 +95,7 @@ export function InfoCard({
           {price ? <p className={heading}>{price}</p> : null}
         </div>
         <h2 className={`mt-3 text-2xl font-bold ${heading}`}>{title}</h2>
-        <p className={`mt-2 flex-1 text-sm ${body}`}>{description}</p>
+        <p className={`mt-2 line-clamp-4 flex-1 text-sm whitespace-pre-line ${body}`}>{description}</p>
         <div className="mt-6">
           <Button
             variant="outlined"

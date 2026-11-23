@@ -24,6 +24,7 @@ type HeroSectionProps = {
   decorationAlt?: string;
   scrollHint?: string;
   scrollHintTargetId?: string;
+  onReady?: () => void;
 };
 
 function loadImage(index: number) {
@@ -62,9 +63,12 @@ export function HeroSection({
   decorationAlt = "",
   scrollHint,
   scrollHintTargetId,
+  onReady,
 }: HeroSectionProps) {
   const sectionRef = useRef<HTMLElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const onReadyRef = useRef(onReady);
+  onReadyRef.current = onReady;
 
   useGSAP(() => {
     const canvas = canvasRef.current;
@@ -151,6 +155,8 @@ export function HeroSection({
       });
       void preload(FRAME_COUNT);
     });
+
+    onReadyRef.current?.();
 
     return () => {
       cancelled = true;
