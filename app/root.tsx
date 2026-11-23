@@ -8,6 +8,7 @@ import {
 } from "react-router";
 
 import type { Route } from "./+types/root";
+import { SocialLinks } from "./components/molecules";
 import { Navbar } from "./components/organisms/navbar";
 import { content } from "./constants/content";
 import "./app.css";
@@ -55,6 +56,7 @@ export default function App() {
         closeMenuLabel={content.navigation.closeMenu}
       />
       <Outlet />
+      <SocialLinks label={content.social.label} links={content.social.links} />
     </>
   );
 }

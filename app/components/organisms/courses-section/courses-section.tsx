@@ -50,7 +50,7 @@ export function CoursesSection({
     activeFilter === "all" ? courses : courses.filter((course) => course.category === activeFilter);
 
   return (
-    <section id={id} className="min-h-screen bg-coffee-bean px-5 pt-28 pb-16 sm:px-8">
+    <section id={id} className="min-h-screen bg-black px-5 pt-28 pb-16 sm:px-8">
       <div className="mx-auto w-full max-w-6xl">
         <ul className="flex flex-wrap gap-3">
           {badges.map((badge) => (

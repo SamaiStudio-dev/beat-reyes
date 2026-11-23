@@ -40,7 +40,7 @@ export function CourseDetail({
   imageAlt = "",
 }: CourseDetailProps) {
   return (
-    <section className="min-h-screen bg-coffee-bean px-5 pt-28 pb-16 sm:px-8">
+    <section className="min-h-screen bg-black px-5 pt-28 pb-16 sm:px-8">
       <div className="mx-auto w-full max-w-3xl">
         <p className="text-xs tracking-wide text-neon-grass uppercase">{meta}</p>
         <h1 className="mt-3 text-4xl font-bold text-white-smoke">{title}</h1>

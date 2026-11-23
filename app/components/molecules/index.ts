@@ -8,3 +8,4 @@
 
 export { ChoiceCard } from "./choice-card";
 export { InfoCard, type InfoCardBackground, type InfoCardVariant } from "./info-card";
+export { SocialLinks, type SocialLink } from "./social-links";

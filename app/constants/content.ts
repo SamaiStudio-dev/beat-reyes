@@ -1,3 +1,13 @@
+import portrait from "~/assets/retrato-david.png";
+import yearsHighlight from "~/assets/6anios.png";
+import baristasHighlight from "~/assets/120baristas.png";
+import espressoImage from "~/assets/nathan-dumlao-KixfBEdyp64-unsplash.jpg";
+import latteArtImage from "~/assets/jonas-jacobsson-RFHFV7lVQBY-unsplash.jpg";
+import flowImage from "~/assets/karl-fredrickson-TYIzeCiZ_60-unsplash.jpg";
+import footerEdge from "~/assets/bottom.png";
+import heroGraffiti from "~/assets/grafiti-hero.svg";
+import advisoryImage from "~/assets/cafeteria.jpeg";
+
 const aboutSectionId = "sobre-mi";
 const coursesSectionId = "cursos";
 const advisorySectionId = "asesoria";
@@ -14,7 +24,7 @@ export const content = {
       { label: "Cursos", to: `/#${coursesSectionId}` },
       { label: "Asesoría", to: `/#${advisorySectionId}` },
       // { label: "Contacto", to: "/contacto" },
-      // { label: "Herramientas", to: "/herramientas" },
+      // { label: "Herramientas y recursos", to: "/herramientas" },
     ],
   },
   home: {
@@ -25,28 +35,31 @@ export const content = {
     heroActionLabel: "Hablemos",
     heroActionPath: "/contacto",
     heroImageLabel: "Secuencia de la cafetera controlada con el scroll",
+    heroDecorationSrc: heroGraffiti,
+    heroDecorationAlt: "",
+    heroScrollHint: "Desliza hacia abajo",
   },
   about: {
     id: aboutSectionId,
-    imageSrc: "/about.png",
+    imageSrc: portrait,
     imageAlt: "David Reyes",
     title: "TÉCNICA REAL Y BUENA ONDA.",
     description:
       "Soy David Reyes. Nací en Colombia, pero fue acá en Buenos Aires donde me hice barista de verdad. Llevo más de seis años trabajando en cafeterías de especialidad, jugando con todo: desde calibrar una máquina espresso profesional hasta sacar lo mejor de una AeroPress o una italiana. Hoy vuelco toda esa experiencia en clases, catas y asesorías para que disfrutes el café sin vueltas.",
-    stats: [
-      { value: "+6 AÑOS", label: "DE EXPERIENCIA REAL" },
-      { value: "+120", label: "BARISTAS FORMADOS" }
+    highlights: [
+      { src: yearsHighlight, alt: "+6 años de experiencia real" },
+      { src: baristasHighlight, alt: "+120 baristas formados" },
     ],
   },
   courses: {
     id: coursesSectionId,
     badges: [
-      { label: "Formación 100% práctica", variant: "solid" },
+      { label: "ENTRENAMIENTO EN MÁQUINA", variant: "solid" },
       { label: "Grupos reducidos · barra real", variant: "outline" },
     ],
-    title: "Cursos de barista sin rodeos.",
+    title: "FORMACIÓN DE BARISTAS DE ALTO NIVEL.",
     description:
-      "Aprende en barra real con David Reyes (Beat Reyes). Poca teoría aburrida, mucha calibración, flujo de trabajo y ritmo urbano.",
+      "Entrena detrás de la máquina para dominar la extracción, la textura de leche y el ritmo de despacho con criterio profesional.",
     filters: [
       { id: "all", label: "Todos" },
       { id: "presencial", label: "Presencial" },
@@ -57,7 +70,7 @@ export const content = {
         id: "espresso",
         category: "presencial",
         variant: "image",
-        imageSrc: "/courses/espresso.png",
+        imageSrc: espressoImage,
         imageAlt: "Extracción de espresso en una taza",
         meta: "Presencial · 6H",
         // price: "$120 USD",
@@ -71,7 +84,7 @@ export const content = {
         id: "latte-art",
         category: "intensivo",
         variant: "image",
-        imageSrc: "/courses/latte-art.png",
+        imageSrc: latteArtImage,
         imageAlt: "Barista sirviendo latte art",
         meta: "Intensivo · 4H",
         // price: "$95 USD",
@@ -85,7 +98,7 @@ export const content = {
         id: "flujo",
         category: "presencial",
         variant: "image",
-        imageSrc: "/courses/flujo.png",
+        imageSrc: flowImage,
         imageAlt: "Barra de café de especialidad con estética urbana",
         meta: "Presencial · 5H",
         // price: "$110 USD",
@@ -100,47 +113,56 @@ export const content = {
   advisory: {
     id: advisorySectionId,
     eyebrow: "Consultoría 1:1 · David Reyes",
-    title: "Barras con criterio,\nflujo y carácter.",
+    title: "Barras eficientes,\nrentables y con identidad.",
     description:
-      "Acompaño a cafeterías independientes desde el diseño ergonómico de la barra hasta la calibración diaria de espresso y el entrenamiento de equipo.",
-    imageSrc: "/asesoria.png",
+      "Asesoría integral para cafeterías de especialidad y proyectos gastronómicos: desde la arquitectura de barra y selección de equipamiento hasta la estandarización de recetas y capacitación del equipo.",
+    imageSrc: advisoryImage,
     imageAlt: "Cafetería de especialidad con barra de madera",
-    scopeEyebrow: "Alcance del proyecto",
-    scopeTitle: "Áreas a trabajar",
+    scopeEyebrow: "ALCANCE DE CONSULTORÍA",
+    scopeTitle: "Módulos de trabajo",
     areas: [
       {
         id: "infraestructura",
         index: "01",
         label: "Infraestructura",
-        title: "Apertura de Barra",
-        description: "Equipamiento, filtración y ergonomía.",
+        title: "Diseño & Apertura de Barra",
+        description: "Layout ergonómico, selección de maquinaria y sistemas de filtración de agua.",
       },
       {
         id: "producto",
         index: "02",
         label: "Producto",
-        title: "Carta & Recetas",
-        description: "Menú de especialidad y costeo por taza.",
+        title: "Ingeniería de Menú & Recetas",
+        description: "Desarrollo de carta de especialidad, fichas técnicas y costeo exacto por taza..",
       },
       {
         id: "equipo",
         index: "03",
         label: "Equipo",
-        title: "Entrenamiento",
-        description: "Consistencia y ritmo en horas pico.",
+        title: "Capacitación & Flujo",
+        description: "Entrenamiento operativo para sostener velocidad y consistencia en horas pico.",
       },
       {
         id: "auditoria",
         index: "04",
         label: "Auditoría",
-        title: "Control de Calidad",
-        description: "Diagnóstico de extracción y mantenimiento.",
+        title: "Control de Calidad & Procesos",
+        description: "Diagnóstico de extracción, calibración diaria y protocolos de mantenimiento.",
       },
+    ],
+  },
+  social: {
+    label: "Redes sociales",
+    links: [
+      { icon: "whatsapp", label: "WhatsApp", href: "https://wa.me/" },
+      { icon: "instagram", label: "Instagram", href: "https://www.instagram.com/" },
     ],
   },
   footer: {
     label: "Pie de página",
     note: "Cursos prácticos y asesorías de café en Buenos Aires.",
+    edgeSrc: footerEdge,
+    edgeAlt: "",
   },
   errors: {
     title: "Oops!",

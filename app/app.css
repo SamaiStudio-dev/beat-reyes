@@ -3,7 +3,7 @@
 
 html,
 body {
-  @apply bg-coffee-bean font-sans text-white-smoke;
+  @apply bg-black font-sans text-white-smoke;
   color-scheme: dark;
 }
 

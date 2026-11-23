@@ -6,7 +6,7 @@
  *             app/components/organisms/<Nombre>/index.ts
  */
 
-export { AboutSection, type AboutStat } from "./about-section";
+export { AboutSection, type AboutHighlight } from "./about-section";
 export { AdvisorySection, type AdvisoryArea } from "./advisory-section";
 export { CourseDetail } from "./course-detail";
 export { CoursesSection } from "./courses-section";

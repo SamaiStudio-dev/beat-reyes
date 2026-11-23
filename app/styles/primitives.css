@@ -1,8 +1,9 @@
 @theme static {
+  --color-black: #000000;
   --color-coffee-bean: #0f0608;
   --color-silver: #a5a5a5;
   --color-white-smoke: #f2f2f2;
-  --color-neon-grass: #5aff15;
+  --color-neon-grass: #06a755;
   --color-bright-fern: #29bf12;
 
   --font-sans: "Ubuntu", ui-sans-serif, system-ui, sans-serif,

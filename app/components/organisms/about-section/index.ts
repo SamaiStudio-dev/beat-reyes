@@ -1,1 +1,1 @@
-export { AboutSection, type AboutStat } from "./about-section";
+export { AboutSection, type AboutHighlight } from "./about-section";

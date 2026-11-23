@@ -13,7 +13,7 @@ export async function loader({ params }: Route.LoaderArgs) {
 
   return new Response(body, {
     headers: {
-      "Content-Type": "image/png",
+      "Content-Type": "image/webp",
       "Cache-Control": "public, max-age=31536000, immutable",
       "Content-Length": String(body.byteLength),
     },

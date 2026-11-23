@@ -30,6 +30,10 @@ export default function Home() {
           description={content.home.heroDescription}
           action={{ label: content.home.heroActionLabel, to: content.home.heroActionPath }}
           imageLabel={content.home.heroImageLabel}
+          decorationSrc={content.home.heroDecorationSrc}
+          decorationAlt={content.home.heroDecorationAlt}
+          scrollHint={content.home.heroScrollHint}
+          scrollHintTargetId={content.about.id}
         />
         <AboutSection
           id={content.about.id}
@@ -37,7 +41,7 @@ export default function Home() {
           imageAlt={content.about.imageAlt}
           title={content.about.title}
           description={content.about.description}
-          stats={[...content.about.stats]}
+          highlights={[...content.about.highlights]}
         />
         <CoursesSection
           id={content.courses.id}
@@ -66,6 +70,8 @@ export default function Home() {
         links={[...content.navigation.links]}
         note={content.footer.note}
         label={content.footer.label}
+        edgeSrc={content.footer.edgeSrc}
+        edgeAlt={content.footer.edgeAlt}
       />
     </>
   );

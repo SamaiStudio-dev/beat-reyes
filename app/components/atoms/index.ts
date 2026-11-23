@@ -7,5 +7,6 @@
  */
 
 export { Button, buttonColors, type ButtonColor, type ButtonSize, type ButtonTextColor } from "./button";
+export { Icon, iconNames, type IconName } from "./icon";
 export { Card, cardColors, type CardColor, type CardVariant } from "./card";
 export { Chip, chipColors, type ChipColor, type ChipSize, type ChipVariant } from "./chip";

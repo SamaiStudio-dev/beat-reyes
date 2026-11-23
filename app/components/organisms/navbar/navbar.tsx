@@ -54,7 +54,7 @@ export function Navbar({
   return (
     <header className="fixed inset-x-0 top-0 z-50">
       <nav
-        className="relative z-50 flex items-center justify-between bg-coffee-bean/45 px-5 py-4 backdrop-blur-md sm:px-8"
+        className="relative z-50 flex items-center justify-between bg-black/45 px-5 py-4 backdrop-blur-md sm:px-8"
         aria-label={label}
       >
         <Link
@@ -89,7 +89,7 @@ export function Navbar({
 
       <div
         id="site-menu"
-        className={`fixed inset-0 z-40 flex-col justify-center bg-coffee-bean px-8 lg:hidden ${open ? "flex" : "hidden"}`}
+        className={`fixed inset-0 z-40 flex-col justify-center bg-black px-8 lg:hidden ${open ? "flex" : "hidden"}`}
       >
         <ul className="flex flex-col gap-8">
           {links.map((link) => (

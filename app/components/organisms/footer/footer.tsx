@@ -12,14 +12,17 @@ type FooterProps = {
   links: FooterLink[];
   note: string;
   label: string;
+  edgeSrc?: string;
+  edgeAlt?: string;
 };
 
-export function Footer({ brand, homeTo, links, note, label }: FooterProps) {
+export function Footer({ brand, homeTo, links, note, label, edgeSrc, edgeAlt = "" }: FooterProps) {
   const year = new Date().getFullYear();
 
   return (
-    <footer aria-label={label} className="border-t border-white-smoke/15 bg-coffee-bean px-5 py-12 sm:px-8">
-      <div className="mx-auto flex w-full max-w-6xl flex-col gap-10 sm:flex-row sm:items-start sm:justify-between">
+    <footer aria-label={label} className={`bg-black ${edgeSrc ? "" : "border-t border-white-smoke/15"}`}>
+      {edgeSrc ? <img src={edgeSrc} alt={edgeAlt} className="block w-full" /> : null}
+      <div className="mx-auto flex w-full max-w-6xl flex-col gap-10 px-5 pt-36 sm:flex-row sm:items-start sm:justify-between sm:px-8">
         <div>
           <Link to={homeTo} className="text-xl font-bold text-white-smoke">
             {brand}
@@ -36,7 +39,7 @@ export function Footer({ brand, homeTo, links, note, label }: FooterProps) {
           ))}
         </ul>
       </div>
-      <p className="mx-auto mt-10 w-full max-w-6xl text-xs text-silver">
+      <p className="mx-auto mt-10 w-full max-w-6xl px-5 pb-12 text-xs text-silver sm:px-8">
         © {year} {brand}
       </p>
     </footer>

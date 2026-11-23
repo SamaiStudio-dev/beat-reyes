@@ -5,7 +5,7 @@ const FRAMES_DIR = path.resolve(
   "/Users/u632303/Desktop/animacion-cafetera/output",
 );
 
-const FRAME_NAME = /^frame_\d{4}\.png$/;
+const FRAME_NAME = /^frame_\d{4}\.webp$/;
 
 export async function readFrame(name: string): Promise<Uint8Array | null> {
   if (!FRAME_NAME.test(name)) return null;

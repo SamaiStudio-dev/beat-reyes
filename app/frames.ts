@@ -1,7 +1,7 @@
 export const FRAME_COUNT = 240;
 
 export function frameName(index: number) {
-  return `frame_${String(index).padStart(4, "0")}.png`;
+  return `frame_${String(index).padStart(4, "0")}.webp`;
 }
 
 export function frameSrc(index: number) {

@@ -22,9 +22,13 @@ function CardImage({ src, alt }: { src: string; alt: string }) {
   const [failed, setFailed] = useState(false);
 
   useEffect(() => {
+    setFailed(false);
+  }, [src]);
+
+  useEffect(() => {
     const image = imageRef.current;
     if (image?.complete && image.naturalWidth === 0) setFailed(true);
-  }, [src]);
+  }, [failed, src]);
 
   if (failed) return null;
 
@@ -34,7 +38,7 @@ function CardImage({ src, alt }: { src: string; alt: string }) {
       src={src}
       alt={alt}
       onError={() => setFailed(true)}
-      className="aspect-[16/10] w-full rounded object-cover"
+      className="aspect-[16/10] w-full object-cover"
     />
   );
 }
@@ -72,6 +76,7 @@ export function InfoCard({
   actionTo,
 }: InfoCardProps) {
   const light = lightBackground[backgroundColor];
+  const hasImage = variant === "image" && Boolean(imageSrc);
   const heading = light ? "text-coffee-bean" : "text-white-smoke";
   const body = light ? "text-coffee-bean" : "text-silver";
   const metaColor =
@@ -80,9 +85,11 @@ export function InfoCard({
       : "text-neon-grass";
 
   return (
-    <article className={`flex h-full flex-col rounded p-4 ${cardBackground[backgroundColor]}`}>
-      {variant === "image" && imageSrc ? <CardImage src={imageSrc} alt={imageAlt} /> : null}
-      <div className="flex flex-1 flex-col pt-4">
+    <article
+      className={`flex h-full flex-col overflow-hidden rounded ${hasImage ? "" : "p-4"} ${cardBackground[backgroundColor]}`}
+    >
+      {hasImage && imageSrc ? <CardImage src={imageSrc} alt={imageAlt} /> : null}
+      <div className={`flex flex-1 flex-col ${hasImage ? "p-4" : "pt-4"}`}>
         <div className="flex items-start justify-between gap-4 text-xs tracking-wide uppercase">
           <p className={metaColor}>{meta}</p>
           {price ? <p className={heading}>{price}</p> : null}

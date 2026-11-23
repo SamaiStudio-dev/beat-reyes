@@ -2,7 +2,7 @@ import { useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
-import { Button } from "~/components/atoms";
+import { Button, Icon } from "~/components/atoms";
 import { FRAME_COUNT, frameSrc } from "~/frames";
 import { palette } from "~/styles/primitives";
 
@@ -20,6 +20,10 @@ type HeroSectionProps = {
   description: string;
   action: HeroAction;
   imageLabel: string;
+  decorationSrc?: string;
+  decorationAlt?: string;
+  scrollHint?: string;
+  scrollHintTargetId?: string;
 };
 
 function loadImage(index: number) {
@@ -44,12 +48,21 @@ function paint(
   const x = (width - drawWidth) / 2;
   const y = (height - drawHeight) / 2;
 
-  ctx.fillStyle = palette.coffeeBean;
+  ctx.fillStyle = palette.black;
   ctx.fillRect(0, 0, width, height);
   ctx.drawImage(image, x, y, drawWidth, drawHeight);
 }
 
-export function HeroSection({ title, description, action, imageLabel }: HeroSectionProps) {
+export function HeroSection({
+  title,
+  description,
+  action,
+  imageLabel,
+  decorationSrc,
+  decorationAlt = "",
+  scrollHint,
+  scrollHintTargetId,
+}: HeroSectionProps) {
   const sectionRef = useRef<HTMLElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
@@ -146,21 +159,45 @@ export function HeroSection({ title, description, action, imageLabel }: HeroSect
   }, { scope: sectionRef });
 
   return (
-    <section ref={sectionRef} className="relative h-screen bg-coffee-bean">
-      <canvas
-        ref={canvasRef}
-        className="absolute inset-0 h-full w-full"
-        aria-label={imageLabel}
-      />
-      <div className="pointer-events-none absolute inset-0 z-10 flex items-center px-5 sm:px-8">
-        <div className="max-w-xl">
-          <h1 className="text-4xl font-bold text-white-smoke sm:text-6xl">{title}</h1>
-          <p className="mt-4 max-w-md text-base text-white-smoke sm:text-lg">{description}</p>
-          <div className="pointer-events-auto mt-8">
+    <section ref={sectionRef} className="relative flex h-screen items-center bg-black px-5 sm:px-8">
+      <div className="mx-auto grid w-full max-w-6xl items-center gap-8 lg:grid-cols-2">
+        <div>
+          <h1 className="origin-left -rotate-[0.5deg] text-4xl font-bold text-white-smoke sm:text-6xl">{title}</h1>
+          <p className="mt-8 max-w-md text-base text-white-smoke sm:text-lg">{description}</p>
+          <div className="mt-8">
             <Button to={action.to} variant="animated" size="lg">{action.label}</Button>
           </div>
         </div>
+        <div className="relative">
+          <div className="overflow-hidden rounded border border-white-smoke/15">
+            <canvas
+              ref={canvasRef}
+              className="block aspect-video w-full"
+              aria-label={imageLabel}
+            />
+          </div>
+          {decorationSrc ? (
+            <img
+              src={decorationSrc}
+              alt={decorationAlt}
+              className="pointer-events-none absolute right-0 bottom-0 z-10 w-[68%] translate-x-[10%] translate-y-[62%]"
+            />
+          ) : null}
+        </div>
       </div>
+      {scrollHint ? (
+        <button
+          type="button"
+          onClick={() => {
+            if (!scrollHintTargetId) return;
+            document.getElementById(scrollHintTargetId)?.scrollIntoView({ behavior: "smooth" });
+          }}
+          className="absolute inset-x-0 bottom-6 z-20 flex cursor-pointer flex-col items-center gap-2 text-sm text-white-smoke focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white-smoke"
+        >
+          {scrollHint}
+          <Icon name="arrow-down" className="size-5" />
+        </button>
+      ) : null}
     </section>
   );
 }

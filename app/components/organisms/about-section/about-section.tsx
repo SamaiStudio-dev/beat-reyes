@@ -1,9 +1,8 @@
 import { useEffect, useRef, useState } from "react";
-import { Card, type CardColor } from "~/components/atoms";
 
-export type AboutStat = {
-  value: string;
-  label: string;
+export type AboutHighlight = {
+  src: string;
+  alt: string;
 };
 
 type AboutSectionProps = {
@@ -12,8 +11,7 @@ type AboutSectionProps = {
   imageAlt: string;
   title: string;
   description: string;
-  stats: AboutStat[];
-  cardColor?: CardColor;
+  highlights: AboutHighlight[];
 };
 
 function AboutImage({ src, alt }: { src: string; alt: string }) {
@@ -21,9 +19,13 @@ function AboutImage({ src, alt }: { src: string; alt: string }) {
   const [failed, setFailed] = useState(false);
 
   useEffect(() => {
+    setFailed(false);
+  }, [src]);
+
+  useEffect(() => {
     const image = imageRef.current;
     if (image?.complete && image.naturalWidth === 0) setFailed(true);
-  }, [src]);
+  }, [failed, src]);
 
   return (
     <div className="flex h-full max-h-[34vh] items-center justify-center overflow-hidden lg:max-h-full">
@@ -33,7 +35,7 @@ function AboutImage({ src, alt }: { src: string; alt: string }) {
           src={src}
           alt={alt}
           onError={() => setFailed(true)}
-          className="max-h-full w-full object-contain"
+          className="h-full max-h-[70vh] w-full object-contain object-left"
         />
       )}
     </div>
@@ -46,29 +48,31 @@ export function AboutSection({
   imageAlt,
   title,
   description,
-  stats,
-  cardColor = "neon-grass",
+  highlights,
 }: AboutSectionProps) {
   return (
     <section
       id={id}
-      className="flex h-screen items-center overflow-hidden bg-coffee-bean px-5 sm:px-8"
+      className="flex min-h-screen items-center bg-black px-5 py-24 sm:px-8"
     >
-      <div className="mx-auto grid h-full w-full max-w-6xl items-center gap-8 py-16 lg:grid-cols-2">
-        <AboutImage src={imageSrc} alt={imageAlt} />
-        <div>
-          <h2 className="text-3xl font-bold text-white-smoke sm:text-5xl">{title}</h2>
-          <p className="mt-4 max-w-xl text-base text-silver sm:text-lg">{description}</p>
-          <ul className="mt-8 grid grid-cols-3 gap-3 sm:gap-4">
-            {stats.map((stat) => (
-              <li key={`${stat.value}-${stat.label}`}>
-                <Card variant="outlined" color={cardColor}>
-                  <p className="text-2xl font-bold text-neon-grass">{stat.value}</p>
-                  <p className="mt-2 text-xs tracking-wide text-white-smoke uppercase">{stat.label}</p>
-                </Card>
-              </li>
-            ))}
-          </ul>
+      <div className="mx-auto flex w-full max-w-6xl flex-col justify-center gap-10">
+        <div className="grid items-center gap-8 lg:grid-cols-2">
+          <AboutImage src={imageSrc} alt={imageAlt} />
+          <div>
+            <h2 className="text-3xl font-bold text-white-smoke sm:text-5xl">{title}</h2>
+            <p className="mt-4 max-w-xl text-base text-silver sm:text-lg">{description}</p>
+            <ul className="mt-8 grid w-full max-w-sm grid-cols-2 gap-3">
+              {highlights.map((highlight) => (
+                <li key={highlight.src}>
+                  <img
+                    src={highlight.src}
+                    alt={highlight.alt}
+                    className="w-full rounded object-contain"
+                  />
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
       </div>
     </section>
