@@ -61,8 +61,65 @@ body {
   opacity: 0.9;
 }
 
+.button-outline-hover-animated {
+  position: relative;
+  isolation: isolate;
+}
+
+.button-outline-hover-animated::before,
+.button-outline-hover-animated::after {
+  content: "";
+  position: absolute;
+  border-radius: inherit;
+  padding: 1.5px;
+  background: conic-gradient(
+    from var(--button-angle),
+    transparent 0deg,
+    transparent 230deg,
+    #ffffff 275deg,
+    #5aff15 315deg,
+    transparent 350deg
+  );
+  opacity: 0;
+  pointer-events: none;
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+}
+
+.button-outline-hover-animated::before {
+  inset: -2px;
+}
+
+.button-outline-hover-animated::after {
+  inset: -3px;
+  filter: blur(7px);
+}
+
+.button-outline-hover-animated:hover,
+.button-outline-hover-animated:focus-visible {
+  animation: button-border-spin 2.8s linear infinite;
+}
+
+.button-outline-hover-animated:hover::before,
+.button-outline-hover-animated:focus-visible::before {
+  opacity: 1;
+}
+
+.button-outline-hover-animated:hover::after,
+.button-outline-hover-animated:focus-visible::after {
+  opacity: 0.9;
+}
+
 @media (prefers-reduced-motion: reduce) {
-  .button-animated-border {
+  .button-animated-border,
+  .button-outline-hover-animated:hover,
+  .button-outline-hover-animated:focus-visible {
     animation: none;
   }
 }

@@ -6,4 +6,5 @@
  *             app/components/molecules/<Nombre>/index.ts
  */
 
-export {};
+export { ChoiceCard } from "./choice-card";
+export { InfoCard, type InfoCardBackground, type InfoCardVariant } from "./info-card";

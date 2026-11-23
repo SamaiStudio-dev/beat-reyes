@@ -1,1 +1,1 @@
-export { CoursesSection } from "./courses-section";
+export { CoursesSection, type CourseBadge, type CourseFilter, type CourseItem } from "./courses-section";

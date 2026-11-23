@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useLocation } from "react-router";
 import type { Route } from "./+types/home";
 import { content } from "~/constants/content";
-import { AboutSection, HeroSection } from "~/components/organisms";
+import { AboutSection, AdvisorySection, CoursesSection, Footer, HeroSection } from "~/components/organisms";
 
 export function meta({}: Route.MetaArgs) {
   return [
@@ -23,21 +23,50 @@ export default function Home() {
   }, [hash]);
 
   return (
-    <main>
-      <HeroSection
-        title={content.home.heroTitle}
-        description={content.home.heroDescription}
-        action={{ label: content.home.heroActionLabel, to: content.home.heroActionPath }}
-        imageLabel={content.home.heroImageLabel}
+    <>
+      <main>
+        <HeroSection
+          title={content.home.heroTitle}
+          description={content.home.heroDescription}
+          action={{ label: content.home.heroActionLabel, to: content.home.heroActionPath }}
+          imageLabel={content.home.heroImageLabel}
+        />
+        <AboutSection
+          id={content.about.id}
+          imageSrc={content.about.imageSrc}
+          imageAlt={content.about.imageAlt}
+          title={content.about.title}
+          description={content.about.description}
+          stats={[...content.about.stats]}
+        />
+        <CoursesSection
+          id={content.courses.id}
+          badges={[...content.courses.badges]}
+          title={content.courses.title}
+          description={content.courses.description}
+          filters={[...content.courses.filters]}
+          courses={[...content.courses.items]}
+          cardBackgroundColor="white-smoke-soft"
+        />
+        <AdvisorySection
+          id={content.advisory.id}
+          eyebrow={content.advisory.eyebrow}
+          title={content.advisory.title}
+          description={content.advisory.description}
+          imageSrc={content.advisory.imageSrc}
+          imageAlt={content.advisory.imageAlt}
+          scopeEyebrow={content.advisory.scopeEyebrow}
+          scopeTitle={content.advisory.scopeTitle}
+          areas={[...content.advisory.areas]}
+        />
+      </main>
+      <Footer
+        brand={content.brand}
+        homeTo={content.homePath}
+        links={[...content.navigation.links]}
+        note={content.footer.note}
+        label={content.footer.label}
       />
-      <AboutSection
-        id={content.about.id}
-        imageSrc={content.about.imageSrc}
-        imageAlt={content.about.imageAlt}
-        title={content.about.title}
-        description={content.about.description}
-        stats={[...content.about.stats]}
-      />
-    </main>
+    </>
   );
 }

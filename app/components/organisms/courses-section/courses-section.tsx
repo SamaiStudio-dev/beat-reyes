@@ -1,12 +1,102 @@
-type CoursesSectionProps = {
-  title: string;
+import { useState } from "react";
+import { Chip, type ChipVariant } from "~/components/atoms";
+import { InfoCard, type InfoCardBackground, type InfoCardVariant } from "~/components/molecules";
+
+export type CourseBadge = {
+  label: string;
+  variant: ChipVariant;
 };
 
-export function CoursesSection({ title }: CoursesSectionProps) {
+export type CourseFilter = {
+  id: string;
+  label: string;
+};
+
+export type CourseItem = {
+  id: string;
+  category: string;
+  variant: InfoCardVariant;
+  imageSrc?: string;
+  imageAlt?: string;
+  meta: string;
+  price?: string;
+  title: string;
+  description: string;
+  actionLabel: string;
+  actionTo: string;
+};
+
+type CoursesSectionProps = {
+  id: string;
+  badges: CourseBadge[];
+  title: string;
+  description: string;
+  filters: CourseFilter[];
+  courses: CourseItem[];
+  cardBackgroundColor: InfoCardBackground;
+};
+
+export function CoursesSection({
+  id,
+  badges,
+  title,
+  description,
+  filters,
+  courses,
+  cardBackgroundColor,
+}: CoursesSectionProps) {
+  const [activeFilter, setActiveFilter] = useState(filters[0]?.id ?? "all");
+  const visibleCourses =
+    activeFilter === "all" ? courses : courses.filter((course) => course.category === activeFilter);
+
   return (
-    <section className="flex h-screen items-center bg-coffee-bean px-5 sm:px-8">
+    <section id={id} className="min-h-screen bg-coffee-bean px-5 pt-28 pb-16 sm:px-8">
       <div className="mx-auto w-full max-w-6xl">
-        <h1 className="text-4xl font-bold text-white-smoke sm:text-6xl">{title}</h1>
+        <ul className="flex flex-wrap gap-3">
+          {badges.map((badge) => (
+            <li key={badge.label}>
+              <Chip variant={badge.variant} color="white-smoke">{badge.label}</Chip>
+            </li>
+          ))}
+        </ul>
+        <h1 className="mt-6 max-w-4xl text-4xl font-bold tracking-tight text-white-smoke uppercase sm:text-4xl">{title}</h1>
+        <p className="mt-4 max-w-3xl text-base text-white-smoke sm:text-lg">{description}</p>
+        <ul className="mt-8 flex flex-wrap gap-3">
+          {filters.map((filter) => {
+            const selected = filter.id === activeFilter;
+            const label = filter.id === "all" ? `${filter.label} ( ${courses.length} )` : filter.label;
+
+            return (
+              <li key={filter.id}>
+                <Chip
+                  size="sm"
+                  variant={selected ? "solid" : "outline"}
+                  onClick={() => setActiveFilter(filter.id)}
+                >
+                  {label}
+                </Chip>
+              </li>
+            );
+          })}
+        </ul>
+        <ul className="mt-10 grid gap-8 lg:grid-cols-3">
+          {visibleCourses.map((course) => (
+            <li key={course.id}>
+              <InfoCard
+                variant={course.variant}
+                backgroundColor={cardBackgroundColor}
+                imageSrc={course.imageSrc}
+                imageAlt={course.imageAlt}
+                meta={course.meta}
+                price={course.price}
+                title={course.title}
+                description={course.description}
+                actionLabel={course.actionLabel}
+                actionTo={course.actionTo}
+              />
+            </li>
+          ))}
+        </ul>
       </div>
     </section>
   );

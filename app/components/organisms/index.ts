@@ -7,6 +7,9 @@
  */
 
 export { AboutSection, type AboutStat } from "./about-section";
+export { AdvisorySection, type AdvisoryArea } from "./advisory-section";
+export { CourseDetail } from "./course-detail";
 export { CoursesSection } from "./courses-section";
+export { Footer, type FooterLink } from "./footer";
 export { HeroSection } from "./hero-section";
 export { Navbar, type NavbarLink } from "./navbar";

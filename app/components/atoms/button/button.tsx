@@ -14,11 +14,12 @@ export type ButtonSize = "sm" | "md" | "lg";
 export type ButtonTextColor = "white" | "black";
 
 type ButtonBase = {
-  to: string;
   children: string;
   size?: ButtonSize;
+  fullWidth?: boolean;
+  uppercase?: boolean;
   onClick?: () => void;
-};
+} & ({ to: string; type?: never } | { to?: undefined; type?: "button" | "submit" });
 
 type SolidButton = ButtonBase & {
   variant?: "solid";
@@ -28,6 +29,7 @@ type SolidButton = ButtonBase & {
 type OutlinedButton = ButtonBase & {
   variant: "outlined";
   color?: ButtonColor;
+  animateOnHover?: boolean;
 };
 
 type LinkButton = ButtonBase & {
@@ -103,19 +105,41 @@ function variantClass(props: ButtonProps) {
 }
 
 export function Button(props: ButtonProps) {
-  const { to, children, size = "md", onClick } = props;
+  const { children, size = "md", fullWidth = false, uppercase = false, onClick } = props;
   const variant = props.variant ?? "solid";
+  const animateOnHover = props.variant === "outlined" && props.animateOnHover;
+  const to = "to" in props ? props.to : undefined;
 
   const className = [
     "inline-flex items-center justify-center rounded transition-colors",
     "focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-current",
     variant === "link" ? linkSize[size] : boxedSize[size],
+    fullWidth ? "w-full" : "",
+    uppercase ? "uppercase tracking-wide" : "",
+    animateOnHover ? "button-outline-hover-animated" : "",
     variantClass(props),
-  ].join(" ");
+  ]
+    .filter(Boolean)
+    .join(" ");
+
+  const label =
+    variant === "animated" || animateOnHover ? (
+      <span className="relative z-10">{children}</span>
+    ) : (
+      children
+    );
+
+  if (to) {
+    return (
+      <Link to={to} onClick={onClick} className={className}>
+        {label}
+      </Link>
+    );
+  }
 
   return (
-    <Link to={to} onClick={onClick} className={className}>
-      {variant === "animated" ? <span className="relative z-10">{children}</span> : children}
-    </Link>
+    <button type={"type" in props ? props.type ?? "button" : "button"} onClick={onClick} className={className}>
+      {label}
+    </button>
   );
 }
