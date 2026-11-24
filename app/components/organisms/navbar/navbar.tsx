@@ -59,7 +59,7 @@ export function Navbar({
       >
         <Link
           to={homeTo}
-          className="text-xl font-bold text-white-smoke sm:text-2xl"
+          className="font-brand text-xl text-white-smoke sm:text-1xl"
           onClick={close}
         >
           {brand}
