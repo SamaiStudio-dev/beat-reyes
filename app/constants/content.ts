@@ -203,6 +203,36 @@ export const content = {
     edgeSrc: footerEdge,
     edgeAlt: "",
   },
+  tools: {
+    title: "Herramientas y recursos",
+    description: "Material para consultar y abrir sin salir de la página.",
+    empty: "Esta carpeta no tiene archivos.",
+    close: "Cerrar",
+    preview: "Vista",
+    download: "Descargar",
+    previewFallback: "No se pudo mostrar la presentación.",
+    root: "Recursos",
+    unavailable: "Los recursos todavía no están publicados.",
+    setup:
+      "Definí GOOGLE_SERVICE_ACCOUNT_EMAIL, GOOGLE_PRIVATE_KEY y GOOGLE_DRIVE_FOLDER_ID. Compartí esa carpeta con el correo de la cuenta de servicio.",
+    kinds: {
+      folder: "Carpeta",
+      sharedDrive: "Unidad compartida",
+      document: "Documento",
+      sheet: "Hoja de cálculo",
+      slides: "Presentación",
+      file: "Archivo",
+    },
+    errors: {
+      config: "Falta la configuración de Google Drive.",
+      auth: "Las variables están cargadas, pero Google rechazó la clave. El correo y la clave privada tienen que salir del mismo archivo JSON de la cuenta de servicio.",
+      disabled:
+        "La API de Google Drive está apagada en el proyecto de la cuenta de servicio. Activala y esperá un minuto: https://console.cloud.google.com/apis/library/drive.googleapis.com",
+      missing:
+        "La cuenta de servicio no ve esa carpeta. Compartila con el correo de GOOGLE_SERVICE_ACCOUNT_EMAIL, con permiso de lectura.",
+      read: "No se pudo leer el contenido del Drive.",
+    },
+  },
   errors: {
     title: "Oops!",
     fallback: "Error",

@@ -19,7 +19,7 @@ type ButtonBase = {
   fullWidth?: boolean;
   uppercase?: boolean;
   onClick?: () => void;
-} & ({ to: string; type?: never } | { to?: undefined; type?: "button" | "submit" });
+} & ({ to: string; type?: never; download?: boolean } | { to?: undefined; type?: "button" | "submit"; download?: never });
 
 type SolidButton = ButtonBase & {
   variant?: "solid";
@@ -128,6 +128,14 @@ export function Button(props: ButtonProps) {
     ) : (
       children
     );
+
+  if (to && "download" in props && props.download) {
+    return (
+      <a href={to} download onClick={onClick} className={className}>
+        {label}
+      </a>
+    );
+  }
 
   if (to && /^https?:\/\//.test(to)) {
     return (

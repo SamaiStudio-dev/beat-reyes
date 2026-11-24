@@ -14,7 +14,38 @@ export function meta({}: Route.MetaArgs) {
   ];
 }
 
+declare global {
+  interface Window {
+    __beatReyesPopstate?: boolean;
+  }
+}
+
+let skipHashScroll = false;
+let previousPath = typeof window !== "undefined" ? window.location.pathname : "/";
+const initialUrl = typeof window !== "undefined" ? window.location.href : "";
+let stayAtTopOnLoad =
+  typeof window !== "undefined" &&
+  (performance.getEntriesByType("navigation")[0] as PerformanceNavigationTiming | undefined)?.type === "reload";
+
+if (typeof window !== "undefined" && !window.__beatReyesPopstate) {
+  window.__beatReyesPopstate = true;
+  const pushState = window.history.pushState.bind(window.history);
+  window.history.pushState = (...args) => {
+    pushState(...args);
+    previousPath = window.location.pathname;
+  };
+  window.addEventListener("popstate", () => {
+    skipHashScroll = !previousPath.startsWith("/cursos/");
+    previousPath = window.location.pathname;
+  });
+}
+
+function openedByReload() {
+  return stayAtTopOnLoad && window.location.href === initialUrl;
+}
+
 function scrollToHash() {
+  if (openedByReload()) return;
   const id = window.location.hash.slice(1);
   if (!id) return;
   document.getElementById(id)?.scrollIntoView({ behavior: "auto" });
@@ -24,7 +55,15 @@ export default function Home() {
   const { hash } = useLocation();
 
   useEffect(() => {
-    if (!hash) return;
+    if (openedByReload()) {
+      stayAtTopOnLoad = false;
+      window.scrollTo(0, 0);
+      const timeout = window.setTimeout(() => window.scrollTo(0, 0), 250);
+      return () => window.clearTimeout(timeout);
+    }
+    const returningElsewhere = skipHashScroll;
+    skipHashScroll = false;
+    if (returningElsewhere || !hash) return;
     scrollToHash();
     const timeout = window.setTimeout(scrollToHash, 250);
     return () => window.clearTimeout(timeout);
@@ -42,7 +81,14 @@ export default function Home() {
           decorationAlt={content.home.heroDecorationAlt}
           scrollHint={content.home.heroScrollHint}
           scrollHintTargetId={content.about.id}
-          onReady={scrollToHash}
+          onReady={() => {
+            if (openedByReload()) {
+              window.scrollTo(0, 0);
+              return;
+            }
+            if (skipHashScroll) return;
+            scrollToHash();
+          }}
         />
         <AboutSection
           id={content.about.id}
