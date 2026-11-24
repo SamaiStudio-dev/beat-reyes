@@ -14,17 +14,15 @@ if (!existsSync(serverBuild)) {
   throw new Error("No está el build del servidor. Corré react-router build primero.");
 }
 
-const entry = path.join(bundleDir, "vercel-entry.mjs");
+const traceEntry = path.join(bundleDir, "vercel-entry.mjs");
 writeFileSync(
-  entry,
+  traceEntry,
   `import { createRequestListener } from "@react-router/node";
 import { RouterContextProvider } from "react-router";
 import * as serverBuild from "./index.js";
 
-const build = serverBuild.default ?? serverBuild;
-
 export default createRequestListener({
-  build,
+  build: serverBuild.default ?? serverBuild,
   getLoadContext() {
     return new RouterContextProvider();
   },
@@ -32,7 +30,7 @@ export default createRequestListener({
 `,
 );
 
-const traced = await nodeFileTrace([entry], {
+const traced = await nodeFileTrace([traceEntry], {
   base: root,
   processCwd: root,
 });
@@ -42,7 +40,9 @@ rmSync(output, { recursive: true, force: true });
 mkdirSync(functionDir, { recursive: true });
 
 for (const file of traced.fileList) {
-  if (file === ".env" || file.startsWith(".env/") || file.startsWith(".env.")) continue;
+  if (file === "package.json" || file === ".env" || file.startsWith(".env/") || file.startsWith(".env.")) {
+    continue;
+  }
   const source = path.join(root, file);
   if (!existsSync(source)) continue;
   const target = path.join(functionDir, file);
@@ -50,15 +50,54 @@ for (const file of traced.fileList) {
   cpSync(source, target);
 }
 
-cpSync(path.join(root, "build/client"), path.join(output, "static"), { recursive: true });
+const serverImport = `./${path.relative(root, serverBuild).split(path.sep).join("/")}`;
+writeFileSync(path.join(functionDir, "package.json"), '{"type":"module"}\n');
+writeFileSync(
+  path.join(functionDir, "index.mjs"),
+  `export default async function handler(input, res) {
+  try {
+    const [{ createRequestHandler, RouterContextProvider }, { createRequestListener }, serverBuild] =
+      await Promise.all([
+        import("react-router"),
+        import("@react-router/node"),
+        import(${JSON.stringify(serverImport)}),
+      ]);
+    const build = serverBuild.default ?? serverBuild;
+    if (typeof res?.end === "function") {
+      return createRequestListener({
+        build,
+        getLoadContext() {
+          return new RouterContextProvider();
+        },
+      })(input, res);
+    }
+    return await createRequestHandler(build)(input, new RouterContextProvider());
+  } catch (error) {
+    const text = error instanceof Error ? error.stack || error.message : String(error);
+    if (typeof res?.end === "function") {
+      res.statusCode = 500;
+      res.setHeader("content-type", "text/plain; charset=utf-8");
+      res.end(text);
+      return;
+    }
+    return new Response(text, {
+      status: 500,
+      headers: { "content-type": "text/plain; charset=utf-8" },
+    });
+  }
+}
+`,
+);
 
-const handler = path.relative(root, entry).split(path.sep).join("/");
+cpSync(path.join(root, "build/client"), path.join(output, "static"), { recursive: true });
+writeFileSync(path.join(output, "static/deploy.txt"), "node-handler\n");
+
 writeFileSync(
   path.join(functionDir, ".vc-config.json"),
   `${JSON.stringify(
     {
       runtime: "nodejs22.x",
-      handler,
+      handler: "index.mjs",
       launcherType: "Nodejs",
       shouldAddHelpers: false,
       supportsResponseStreaming: true,
@@ -83,4 +122,4 @@ writeFileSync(
   )}\n`,
 );
 
-console.log(`Salida de Vercel lista: ${handler}`);
+console.log(`Salida de Vercel lista: index.mjs -> ${serverImport}`);
