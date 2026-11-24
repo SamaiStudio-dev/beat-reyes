@@ -3,6 +3,7 @@ node_modules/
 
 # React Router (tipos generados y salida de `react-router build`)
 .react-router/
+.vercel/
 build/
 
 # Vite
