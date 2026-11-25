@@ -24,6 +24,9 @@ type DriveBrowserProps = {
   setupMessage?: string;
   errorMessage?: string;
   emptyLabel: string;
+  loading?: boolean;
+  loadingLabel: string;
+  failure?: { title: string; hint: string; detail?: string };
   closeLabel: string;
   previewLabel: string;
   downloadLabel: string;
@@ -39,6 +42,9 @@ export function DriveBrowser({
   setupMessage,
   errorMessage,
   emptyLabel,
+  loading = false,
+  loadingLabel,
+  failure,
   closeLabel,
   previewLabel,
   downloadLabel,
@@ -55,8 +61,8 @@ export function DriveBrowser({
         <h1 className="max-w-4xl text-4xl font-bold tracking-tight text-white-smoke uppercase">{title}</h1>
         <p className="mt-4 max-w-3xl text-base text-white-smoke sm:text-lg">{description}</p>
 
-        {setupMessage ? <p className="mt-8 max-w-3xl text-sm text-silver">{setupMessage}</p> : null}
-        {errorMessage ? <p className="mt-6 text-sm text-neon-grass">{errorMessage}</p> : null}
+        {setupMessage && !loading && !failure ? <p className="mt-8 max-w-3xl text-sm text-silver">{setupMessage}</p> : null}
+        {errorMessage && !loading && !failure ? <p className="mt-6 text-sm text-neon-grass">{errorMessage}</p> : null}
 
         {crumbs.length > 0 ? (
           <nav className="mt-8 flex flex-wrap items-center gap-2 text-sm text-silver" aria-label={title}>
@@ -71,9 +77,30 @@ export function DriveBrowser({
           </nav>
         ) : null}
 
-        {connected && !errorMessage && items.length === 0 ? <p className="mt-10 text-silver">{emptyLabel}</p> : null}
+        {loading ? (
+          <ul className="mt-10 grid gap-3" aria-busy="true" aria-label={loadingLabel}>
+            {Array.from({ length: 5 }, (_, index) => (
+              <li key={index} className="flex items-center justify-between gap-4 rounded bg-white-smoke/5 px-4 py-4">
+                <span className="h-4 w-2/5 animate-pulse rounded bg-white-smoke/15" />
+                <span className="h-3 w-16 animate-pulse rounded bg-neon-grass/30" />
+              </li>
+            ))}
+          </ul>
+        ) : null}
 
-        {items.length > 0 ? (
+        {failure && !loading ? (
+          <div role="alert" className="mt-10 max-w-xl rounded border border-white-smoke/15 bg-white-smoke/5 px-6 py-8">
+            <p className="text-lg font-bold text-white-smoke">{failure.title}</p>
+            <p className="mt-2 text-sm text-silver">{failure.hint}</p>
+            {failure.detail ? <p className="mt-4 text-sm text-silver">{failure.detail}</p> : null}
+          </div>
+        ) : null}
+
+        {connected && !loading && !failure && !errorMessage && items.length === 0 ? (
+          <p className="mt-10 text-silver">{emptyLabel}</p>
+        ) : null}
+
+        {!loading && !failure && items.length > 0 ? (
           <ul className="mt-10 grid gap-3">
             {items.map((item) => {
               const className =

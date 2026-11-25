@@ -1,8 +1,6 @@
 import { createSign } from "node:crypto";
 import { existsSync, readFileSync } from "node:fs";
 import path from "node:path";
-import { data } from "react-router";
-
 const DRIVE_SCOPE = "https://www.googleapis.com/auth/drive.readonly";
 const TOKEN_URL = "https://oauth2.googleapis.com/token";
 const FOLDER_MIME = "application/vnd.google-apps.folder";
@@ -112,7 +110,10 @@ function folderHref(id: string, driveId: string | null) {
   return `/herramientas?${params.toString()}`;
 }
 
+const LIBRARY_TTL = 60_000;
+
 let cachedToken: { value: string; expiresAt: number } | null = null;
+const libraryCache = new Map<string, { value: DriveLibrary; expiresAt: number }>();
 
 function serviceAssertion(email: string, privateKey: string) {
   const now = Math.floor(Date.now() / 1000);
@@ -255,6 +256,9 @@ async function folderChain(token: string, folderId: string, driveId: string | nu
 
 export async function loadDriveLibrary(request: Request) {
   const folderId = safeId(new URL(request.url).searchParams.get("folder"));
+  const cacheKey = folderId ?? libraryRoot() ?? "";
+  const cached = libraryCache.get(cacheKey);
+  if (cached && cached.expiresAt > Date.now()) return cached.value;
   const empty = (connected: boolean, error?: DriveLibrary["error"]): DriveLibrary => ({
     connected,
     error,
@@ -264,21 +268,21 @@ export async function loadDriveLibrary(request: Request) {
   });
 
   const root = libraryRoot();
-  if (!serviceAccount() || !root) return data(empty(false, "config"));
+  if (!serviceAccount() || !root) return (empty(false, "config"));
 
   const token = await ownerAccessToken();
-  if (!token) return data(empty(false, "auth"));
+  if (!token) return (empty(false, "auth"));
 
   const visible = await folderVisible(token, root);
-  if (visible === "disabled") return data(empty(true, "disabled"));
-  if (visible === "missing") return data(empty(true, "missing"));
+  if (visible === "disabled") return (empty(true, "disabled"));
+  if (visible === "missing") return (empty(true, "missing"));
 
   const current = folderId ?? root;
-  if (folderId && !(await withinLibrary(token, folderId, root))) return data(empty(true));
+  if (folderId && !(await withinLibrary(token, folderId, root))) return (empty(true));
 
   const listed = await listChildren(token, current, null);
-  if (listed.disabled) return data(empty(true, "disabled"));
-  if (listed.unauthorized || !listed.items) return data(empty(true, "read"));
+  if (listed.disabled) return (empty(true, "disabled"));
+  if (listed.unauthorized || !listed.items) return (empty(true, "read"));
 
   const library: DriveLibrary = {
     connected: true,
@@ -286,7 +290,8 @@ export async function loadDriveLibrary(request: Request) {
     crumbs: folderId ? await folderChain(token, folderId, null) : [],
     items: listed.items,
   };
-  return data(library);
+  libraryCache.set(cacheKey, { value: library, expiresAt: Date.now() + LIBRARY_TTL });
+  return (library);
 }
 
 async function folderVisible(token: string, folderId: string) {
