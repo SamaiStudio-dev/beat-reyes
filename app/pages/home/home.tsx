@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useLocation } from "react-router";
 import type { Route } from "./+types/home";
 import { content } from "~/constants/content";
-import { AboutSection, AdvisorySection, CoursesSection, Footer, HeroSection } from "~/components/organisms";
+import { AboutSection, AdvisorySection, Carousel, CoursesSection, Footer, HeroSection } from "~/components/organisms";
 
 export function meta({}: Route.MetaArgs) {
   return [
@@ -106,6 +106,12 @@ export default function Home() {
           filters={[...content.courses.filters]}
           courses={[...content.courses.items]}
           cardBackgroundColor="white-smoke-soft"
+        />
+        <Carousel
+          label={content.gallery.label}
+          previousLabel={content.gallery.previousLabel}
+          nextLabel={content.gallery.nextLabel}
+          slides={[...content.gallery.slides]}
         />
         <AdvisorySection
           id={content.advisory.id}

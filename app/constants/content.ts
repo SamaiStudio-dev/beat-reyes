@@ -1,4 +1,4 @@
-import portrait from "~/assets/retrato-david.png";
+import portrait from "~/assets/retrato-david.jpeg";
 import yearsHighlight from "~/assets/6anios.png";
 import baristasHighlight from "~/assets/120baristas.png";
 import espressoImage from "~/assets/nathan-dumlao-KixfBEdyp64-unsplash.jpg";
@@ -8,6 +8,12 @@ import footerEdge from "~/assets/bottom.png";
 import heroGraffiti from "~/assets/grafiti-hero.svg";
 import advisoryImage from "~/assets/cafeteria.jpeg";
 import baristaInicialImage from "~/assets/vincent-leyva-fdUwaeewqt8-unsplash.jpg";
+import carouselKettle from "~/assets/carousel/41-IMG-20250914-WA0079(1).jpg";
+import carouselServe from "~/assets/carousel/51-IMG-20250914-WA0061(1).jpg";
+import carouselCupping from "~/assets/carousel/35-IMG-20250918-WA0027.jpg";
+import carouselBrew from "~/assets/carousel/128-98-20250914_124453.jpg";
+import carouselChemex from "~/assets/carousel/_DSC1104.jpg";
+import carouselBar from "~/assets/carousel/_DSC1183.jpg";
 
 const whatsappHref = "https://wa.me/5491127034860";
 const instagramHref = "https://www.instagram.com/beatreyes_/";
@@ -47,7 +53,7 @@ export const content = {
     imageAlt: "David Reyes",
     title: "TÉCNICA REAL Y BUENA ONDA.",
     description:
-      "Soy David Reyes. Nací en Colombia, pero fue acá en Buenos Aires donde me hice barista de verdad. Llevo más de seis años trabajando en cafeterías de especialidad, jugando con todo: desde calibrar una máquina espresso profesional hasta sacar lo mejor de una AeroPress o una italiana. Hoy vuelco toda esa experiencia en clases, catas y asesorías para que disfrutes el café sin vueltas.",
+      "Soy David Reyes, barista profesional, tostador y capacitador. Nací en Colombia, pero fue acá en Buenos Aires donde me hice barista de verdad. Con más de seis años en el mundo gastronómico y del café de especialidad, pasé por barras clave como Rangitoto, Onze y Seattle Coffee —donde fui barista principal—, además de sumar experiencia como barista e instructor de cursos en Negro Café y formarme como tostador y especialista técnico en máquinas en Fuego y Avo Coffee Roasters. En todo este recorrido fui explorando el café desde distintos ángulos: desde la calibración fina de espresso hasta diferentes métodos de filtrado como AeroPress o cafetera italiana. Hoy vuelco toda esa experiencia en barras, tueste y extracción dirigiendo catas, cursos, capacitaciones corporativas y asesorías gastronómicas para que entiendas y disfrutes el café sin vueltas.",
     highlights: [
       { src: yearsHighlight, alt: "+6 años de experiencia real" },
       { src: baristasHighlight, alt: "+120 baristas formados" },
@@ -147,6 +153,19 @@ export const content = {
         actionLabel: "Ver más",
         actionTo: "/cursos/flujo",
       },
+    ],
+  },
+  gallery: {
+    label: "Galería",
+    previousLabel: "Imagen anterior",
+    nextLabel: "Imagen siguiente",
+    slides: [
+      { src: carouselServe, alt: "David Reyes sirviendo café de filtro en una cata" },
+      { src: carouselCupping, alt: "David Reyes catando café junto a un grupo en la barra" },
+      { src: carouselBrew, alt: "Preparación de café de filtro para una clienta" },
+      { src: carouselChemex, alt: "Chemex con café recién extraído sobre una balanza" },
+      { src: carouselBar, alt: "Barra de café en movimiento con máquina de espresso" },
+      { src: carouselKettle, alt: "David Reyes vertiendo agua en un filtro de café" },
     ],
   },
   advisory: {

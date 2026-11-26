@@ -12,5 +12,6 @@ export { CourseDetail } from "./course-detail";
 export { CoursesSection } from "./courses-section";
 export { DriveBrowser, type DriveBrowserCrumb, type DriveBrowserItem } from "./drive-browser";
 export { Footer, type FooterLink } from "./footer";
+export { Carousel, type CarouselSlide } from "./image-carousel";
 export { HeroSection } from "./hero-section";
 export { Navbar, type NavbarLink } from "./navbar";

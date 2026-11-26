@@ -68,7 +68,7 @@ export function AdvisorySection({
   const showImage = Boolean(imageSrc) && !imageFailed;
 
   return (
-    <section id={id} className="bg-black px-5 pt-28 pb-36 sm:px-8">
+    <section id={id} className="bg-black px-5 pt-12 pb-36 sm:px-8">
       <div className="mx-auto w-full max-w-6xl">
         <div className={`grid items-center gap-10 ${showImage ? "lg:grid-cols-2" : ""}`}>
           <div>

@@ -28,14 +28,14 @@ function AboutImage({ src, alt }: { src: string; alt: string }) {
   }, [failed, src]);
 
   return (
-    <div className="flex h-full max-h-[34vh] items-center justify-center overflow-hidden lg:max-h-full">
+    <div className="flex h-full max-h-[34vh] items-center justify-start lg:max-h-[70vh]">
       {failed ? null : (
         <img
           ref={imageRef}
           src={src}
           alt={alt}
           onError={() => setFailed(true)}
-          className="h-full max-h-[70vh] w-full object-contain object-left"
+          className="max-h-[34vh] w-auto max-w-full rounded-[.5rem] object-contain lg:max-h-[70vh]"
         />
       )}
     </div>

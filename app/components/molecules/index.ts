@@ -10,4 +10,5 @@ export { ChoiceCard } from "./choice-card";
 export { HorizontalCard, type HorizontalCardBackground } from "./horizontal-card";
 export { InfoCard, type InfoCardBackground, type InfoCardVariant } from "./info-card";
 export { SlidePreview } from "./slide-preview";
+export { Stepper } from "./stepper";
 export { SocialLinks, type SocialLink } from "./social-links";
